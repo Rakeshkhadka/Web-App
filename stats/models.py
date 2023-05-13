@@ -28,6 +28,10 @@ class WeatherSummary(models.Model):
         self.avg_min_temp = Decimal(str(self.avg_min_temp))
         self.avg_precipitation = Decimal(str(self.avg_precipitation))
         super().save(*args, **kwargs)
-    
+    class Meta:
+        ordering = ["-id"]
+
+    def __str__(self):
+        return str(self.weatherdate)
 
 
