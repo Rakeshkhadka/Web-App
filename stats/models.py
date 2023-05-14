@@ -3,8 +3,12 @@ from decimal import Decimal
 # Create your models here.
 
 #models for ingested data
-class SourceData(models.Model):
+class CommonModel(models.Model):
     station_id = models.CharField(max_length=255)
+    
+    class Meta:
+        abstract = True
+class SourceData(CommonModel):
     weatherdate = models.DateField()
     low_temperature = models.IntegerField()
     high_temperature = models.IntegerField()
@@ -18,8 +22,7 @@ class SourceData(models.Model):
 
 
 #models for summary of weather for every year for every station
-class WeatherSummary(models.Model):
-    station_id   = models.CharField(max_length=255)
+class WeatherSummary(CommonModel):
     year         = models.IntegerField()
     avg_max_temp = models.DecimalField(max_digits=10, decimal_places=2)
     avg_min_temp = models.DecimalField(max_digits=10, decimal_places=2)
