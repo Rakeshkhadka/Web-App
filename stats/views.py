@@ -1,7 +1,7 @@
 from rest_framework import viewsets, mixins
 from .models import SourceData, WeatherSummary
 from .serializers import SourceDataSerializer, WeatherSummarySerializer
-from weather.permissions import TenResultsPagination
+from weather.paginations import TenResultsPagination
 # Create your views here.
 
 
