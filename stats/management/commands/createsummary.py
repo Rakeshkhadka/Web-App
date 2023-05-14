@@ -6,11 +6,11 @@ import timeit
 
 
 class Command(BaseCommand):
-    help = 'Create Weather Summary'
+    help = 'Create Weather Summary based for every station for every year'
 
     def handle(self, *args, **kwargs):
         start_time = timeit.default_timer()
-        SourceData=SourceData.objects \
+        sourcedata=SourceData.objects \
             .values('station_id', 'weatherdate__year') \
             .exclude(Q(high_temperature=-9999) | Q(low_temperature=-9999) | Q(precipitation=-9999)) \
             .annotate(
@@ -19,7 +19,7 @@ class Command(BaseCommand):
                 avg_precipitation=Avg('precipitation')
                 )     
         weather_summaries = []   
-        for data in SourceData:
+        for data in sourcedata:
             if not WeatherSummary.objects.filter(station_id= data['station_id'], year=data['weatherdate__year']).exists():
                 summary = WeatherSummary(
                     station_id = data.get('station_id', None),

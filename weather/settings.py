@@ -42,6 +42,7 @@ INSTALLED_APPS = [
     ##third part package
     'django_extensions',
     'rest_framework',
+    'django_filters',
     
     ##my application
     'stats',
@@ -62,7 +63,7 @@ ROOT_URLCONF = "weather.urls"
 TEMPLATES = [
     {
         "BACKEND": "django.template.backends.django.DjangoTemplates",
-        "DIRS": [],
+        "DIRS": [BASE_DIR / 'templates'],
         "APP_DIRS": True,
         "OPTIONS": {
             "context_processors": [
@@ -87,17 +88,6 @@ DATABASES = {
         "NAME": BASE_DIR / "db.sqlite3",
     }
 }
-
-# DATABASES = {
-#     'default': {
-#         'ENGINE': 'django.db.backends.postgresql_psycopg2',
-#         'NAME': 'weatherDB', 
-#         'USER': 'admin', 
-#         'PASSWORD': 'admin',
-#         'HOST': '127.0.0.1', 
-#         'PORT': '5432',
-#     }
-# }
 
 
 # Password validation
@@ -140,3 +130,8 @@ STATIC_URL = "static/"
 # https://docs.djangoproject.com/en/4.2/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
+
+# Rest Framework 
+REST_FRAMEWORK = {
+    'DEFAULT_FILTER_BACKENDS': ['django_filters.rest_framework.DjangoFilterBackend']
+}

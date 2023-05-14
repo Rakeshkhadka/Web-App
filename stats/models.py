@@ -2,7 +2,7 @@ from django.db import models
 from decimal import Decimal
 # Create your models here.
 
-
+#models for ingested data
 class SourceData(models.Model):
     station_id = models.CharField(max_length=255)
     weatherdate = models.DateField()
@@ -16,6 +16,8 @@ class SourceData(models.Model):
     def __str__(self):
         return str(self.weatherdate)
 
+
+#models for summary of weather for every year for every station
 class WeatherSummary(models.Model):
     station_id   = models.CharField(max_length=255)
     year         = models.IntegerField()
@@ -32,6 +34,4 @@ class WeatherSummary(models.Model):
         ordering = ["-id"]
 
     def __str__(self):
-        return str(self.weatherdate)
-
-
+        return str(f'{"station id:" + self.station_id + " " + "| year:" + str(self.year)}')
