@@ -10,17 +10,23 @@ class Command(BaseCommand):
 
     def handle(self, *args, **kwargs):
         start_time = timeit.default_timer()
-        sourcedata=SourceData.objects \
-            .values('station_id', 'weatherdate__year') \
-            .exclude(Q(high_temperature=-9999) | Q(low_temperature=-9999) | Q(precipitation=-9999)) \
-            .annotate(
+        sourcedata=SourceData.objects.values(
+            'station_id', 'weatherdate__year'
+            ).exclude(
+                Q(high_temperature=-9999) | 
+                Q(low_temperature=-9999) | 
+                Q(precipitation=-9999)
+            ).annotate(
                 avg_max_temp=Avg('high_temperature'), 
                 avg_min_temp=Avg('low_temperature'), 
                 avg_precipitation=Avg('precipitation')
-                )     
+            )     
         weather_summaries = []   
         for data in sourcedata:
-            if not WeatherSummary.objects.filter(station_id= data['station_id'], year=data['weatherdate__year']).exists():
+            if not WeatherSummary.objects.filter(
+                station_id= data['station_id'], 
+                year=data['weatherdate__year']
+            ).exists():
                 summary = WeatherSummary(
                     station_id = data.get('station_id', None),
                     year = data.get('weatherdate__year', None),

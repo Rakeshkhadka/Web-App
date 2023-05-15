@@ -29,7 +29,10 @@ class Command(BaseCommand):
                         'high_temperature': high_temp.replace(" ", ""),
                         'precipitation': precipitation.replace(" ", "")
                     }
-                    if not  SourceData.objects.filter(station_id = mydict['station_id'], weatherdate=mydict['weatherdate']).exists():
+                    if not SourceData.objects.filter(
+                        station_id = mydict['station_id'], 
+                        weatherdate=mydict['weatherdate']
+                    ).exists():
                         records_to_create.append(SourceData(**mydict))
                         # num_records+=1
         # print(f"Number of records ingested: {num_records}")
