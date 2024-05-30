@@ -13,6 +13,7 @@ class SourceDataViewSet(viewsets.ReadOnlyModelViewSet):
     
 
 class WeatherSummaryViewset(viewsets.ReadOnlyModelViewSet):
+    print('hello')
     queryset = WeatherSummary.objects.all()
     serializer_class = WeatherSummarySerializer
     pagination_class = TenResultsPagination
